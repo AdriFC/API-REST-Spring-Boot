@@ -19,7 +19,7 @@ public class ClienteImpl implements ICliente {
         return clienteDao.save(cliente);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public Cliente findById(Integer id) {
         return clienteDao.findById(id).orElse(null);
