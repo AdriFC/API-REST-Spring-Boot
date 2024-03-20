@@ -1,5 +1,6 @@
 package com.adrianfc.apirest.controller;
 
+import com.adrianfc.apirest.model.dto.ClienteDto;
 import com.adrianfc.apirest.model.entity.Cliente;
 import com.adrianfc.apirest.service.ICliente;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,29 @@ public class ClienteController {
 
     @PostMapping("cliente")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente create(@RequestBody Cliente cliente) {
-        return clienteService.save(cliente);
+    public ClienteDto create(@RequestBody ClienteDto clienteDto) {
+
+        Cliente clienteSave = clienteService.save(clienteDto);
+        return ClienteDto.builder()
+                .idCliente(clienteSave.getIdCliente())
+                .nombre(clienteSave.getNombre())
+                .apellido(clienteSave.getApellido())
+                .correo(clienteSave.getCorreo())
+                .fechaRegistro(clienteSave.getFechaRegistro())
+                .build();
     }
     @PutMapping("cliente")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente update(@RequestBody Cliente cliente) {
-       return clienteService.save(cliente);
+    public ClienteDto update(@RequestBody ClienteDto clienteDto) {
+
+        Cliente clienteUpdate = clienteService.save(clienteDto);
+        return ClienteDto.builder()
+                .idCliente(clienteUpdate.getIdCliente())
+                .nombre(clienteUpdate.getNombre())
+                .apellido(clienteUpdate.getApellido())
+                .correo(clienteUpdate.getCorreo())
+                .fechaRegistro(clienteUpdate.getFechaRegistro())
+                .build();
     }
     @DeleteMapping("cliente/{id}")
     public ResponseEntity <?> delete(@PathVariable Integer id) {
@@ -47,8 +64,16 @@ public class ClienteController {
     }
     @GetMapping("cliente/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Cliente showById(@PathVariable Integer id) {
-        return clienteService.findById(id);
+    public ClienteDto showById(@PathVariable Integer id) {
+
+        Cliente cliente = clienteService.findById(id);
+        return ClienteDto.builder()
+                .idCliente(cliente.getIdCliente())
+                .nombre(cliente.getNombre())
+                .apellido(cliente.getApellido())
+                .correo(cliente.getCorreo())
+                .fechaRegistro(cliente.getFechaRegistro())
+                .build();
     }
 
 }
